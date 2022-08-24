@@ -1,29 +1,32 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
+const SET_STORIES = "SET_STORIES";
+
+export const setStories = (stories) => {
+  return {
+    type: SET_STORIES,
+    stories,
+  };
+};
+
+export const fetchStories = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get("/api/stories");
+      dispatch(setStories(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 
 const initialState = [];
 
-export const fetchStoriesAsync = createAsyncThunk("allStories", async () => {
-  try {
-    const { data } = await axios.get(`/api/stories`);
-    return data;
-  } catch (err) {
-    console.log(err);
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case SET_STORIES:
+      return action.stories;
+    default:
+      return state;
   }
-});
-
-const storiesSlice = createSlice({
-  name: "stories",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchStoriesAsync.fulfilled, (state, action) => {
-      return action.payload;
-    });
-  },
-});
-
-export const selectStories = (state) => {
-  return state.stories;
 };
-export default storiesSlice.reducer;
