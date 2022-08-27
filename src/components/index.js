@@ -1,3 +1,6 @@
-export { default as App } from "./App.js";
-export { default as Navbar } from "./Navbar.js";
-export { default as StoriesList } from "./StoriesList.js";
+export { default as App } from './App.js';
+export { default as Navbar } from './Navbar.js';
+export { default as StoriesList } from './StoriesList.js';
+export { default as SingleStory } from './SingleStory';
+export { default as Authors } from './Authors';
+export { default as SingleAuthor } from './SingleAuthor';
